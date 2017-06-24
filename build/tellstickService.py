@@ -28,7 +28,7 @@ shared_dict = {}
 lock = threading.Lock()
 
 my_logger = logging.getLogger('MyLogger')
-
+messageType = "senML"
 # create formatter
 formatter = logging.Formatter('tellstickService.py [%(levelname)s] %(message)s')
 
@@ -276,6 +276,16 @@ def my_publish(topic, message):
     except:
         myPrint("Couldn't send mqtt message","INFO")
         pass
+
+def parseMessage(id,sensorValue, sensortype):
+    if messageType == "senML":
+        return senML(id,sensorValue,sensortype)
+    else:
+        return easyMessage(id,sensorValue,sensortype)
+
+def easyMessage(id,sensorValue, sensortype):
+    payload ="{\"id\"=\"" + str(id) + "\",\""+str(sensortype)+"\"="+str(sensorValue)+"}"
+    return payload
 
 def senML(id,sensorValue, sensortype):
     payload ="[{"+'"'+"bn"+'"=\"tellstickid:'+str(id)+"\"},"+"{"+'"n"=\"'+str(sensortype)+"\","+'"v"='+str(sensorValue)+"}]"
