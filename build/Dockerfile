@@ -28,4 +28,4 @@ COPY rf433 /tellstick/rf433
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-CMD python -u /tellstick/tellstickService.py
+CMD python -u /tellstick/tellstickService.py '/tellstick/'
